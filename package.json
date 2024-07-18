@@ -1,7 +1,8 @@
 {
-  "name": "MyBookshelf",
+  "name": "mybookshelf",
   "private": true,
   "version": "0.0.0",
+  "description": "MyBookshelf: A personal library management app",
   "type": "module",
   "scripts": {
     "dev": "nodemon -w src/server -x tsx src/server/main.ts",
