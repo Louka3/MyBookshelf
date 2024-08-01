@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 import { BookData } from "../types/bookTypes";
 
 // Define the schema for BookData
-const BookDataSchema: Schema = new mongoose.Schema({
+const bookSchema: Schema = new Schema({
   voluemId: {
     type: String,
     required: true,
@@ -17,10 +17,12 @@ const BookDataSchema: Schema = new mongoose.Schema({
   },
 });
 
+const Book = mongoose.model<BookData>("book", bookSchema);
+
 // Define the interface for Library
 interface Library extends Document {
   username: string;
-  books: BookData[];
+  books: mongoose.Schema.Types.ObjectId[];
 }
 
 // Define the schema for Library
@@ -30,7 +32,15 @@ const librarySchema: Schema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  books: [BookDataSchema], // Reference the databaseBookSchema
+  books: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: false,
+      ref: "book",
+    },
+  ],
 });
 
-export default mongoose.model<Library>("Library", librarySchema);
+const Library = mongoose.model<Library>("library", librarySchema);
+
+export { Book, Library };
