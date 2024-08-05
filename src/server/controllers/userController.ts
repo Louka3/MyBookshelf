@@ -6,7 +6,11 @@ export const userController = {
   // create a user
   async createUser(req: Request, res: Response, next: NextFunction) {
     const { username, password, email } = req.body;
-    User.create({ username: username, password: password, email: email });
+    User.create({ username: username, password: password, email: email }).then(
+      (result) => {
+        res.locals.user = result;
+      },
+    );
     next();
   },
 
