@@ -1,9 +1,14 @@
 import express, { Request, Response } from "express";
 import { userController } from "../controllers/userController";
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.post(
+userRouter.get("/test", userController.test, (_req: Request, res: Response) => {
+  console.log("finished test route");
+  res.status(200).end();
+});
+
+userRouter.post(
   "/signup",
   userController.createUser,
   (_req: Request, res: Response) => {
@@ -11,4 +16,4 @@ router.post(
   },
 );
 
-export default router;
+export default userRouter;

@@ -41,6 +41,6 @@ const librarySchema: Schema = new mongoose.Schema({
   ],
 });
 
-const Library = mongoose.model<Library>("library", librarySchema);
+const Library = mongoose.model<Library>("Library", librarySchema);
 
 export { Book, Library };
