@@ -3,16 +3,43 @@ import { userController } from "../controllers/userController";
 
 const userRouter = express.Router();
 
-userRouter.get("/test", userController.test, (_req: Request, res: Response) => {
-  console.log("finished test route");
-  res.status(200).end();
-});
+userRouter.get(
+  "/username",
+  userController.getUsername,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.username);
+  },
+);
+
+userRouter.get(
+  "/users",
+  userController.getUsers,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.usernames);
+  },
+);
 
 userRouter.post(
   "/signup",
   userController.createUser,
   (_req: Request, res: Response) => {
-    res.status(200).json(res.locals.user);
+    res.status(200).json(res.locals.userData);
+  },
+);
+
+userRouter.patch(
+  "/update",
+  userController.updateUser,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.updatedData);
+  },
+);
+
+userRouter.delete(
+  "/",
+  userController.deleteUser,
+  (_req: Request, res: Response) => {
+    res.status(200).json(res.locals.deletedUser);
   },
 );
 
