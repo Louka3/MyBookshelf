@@ -21,13 +21,13 @@ const Book = mongoose.model<BookData>("book", bookSchema);
 
 // Define the interface for Library
 interface Library extends Document {
-  username: string;
+  userId: string;
   books: mongoose.Schema.Types.ObjectId[];
 }
 
 // Define the schema for Library
 const librarySchema: Schema = new mongoose.Schema({
-  username: {
+  userId: {
     type: String,
     required: true,
     unique: true,
