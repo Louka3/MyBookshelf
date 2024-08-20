@@ -1,5 +1,3 @@
-import { Library } from "../models/libraryModel";
+import { Book, Library } from "../models/libraryModel";
 
-export const bookService = {
-  getBookFromApi: async () => {},
-};
+export const bookService = {};
