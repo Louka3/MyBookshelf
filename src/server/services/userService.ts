@@ -54,5 +54,11 @@ export const userService = {
     return userData;
   },
 
-  async getUsers() {},
+  async getUsers() {
+    let userList;
+    await Users.find({}, { _id: 1, username: 1, email: 1 }).then(
+      (data) => (userList = data),
+    );
+    return userList;
+  },
 };

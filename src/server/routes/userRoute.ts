@@ -15,7 +15,7 @@ userRouter.get(
   "/users",
   userController.getUsers,
   (_req: Request, res: Response) => {
-    res.status(200).json(res.locals.usernames);
+    res.status(200).json(res.locals.userList);
   },
 );
 

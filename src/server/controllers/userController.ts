@@ -1,5 +1,3 @@
-import Users from "../models/userModel";
-// import bcrypt from "bcryptjs";
 import { Request, Response, NextFunction } from "express";
 import { userService } from "../services/userService";
 import bcrypt from "bcryptjs";
@@ -66,9 +64,7 @@ export const userController = {
 
   // get all users
   async getUsers(_req: Request, res: Response, next: NextFunction) {
-    await Users.find({}, { _id: 1, username: 1 }).then((data) => {
-      res.locals.usernames = data;
-    });
+    res.locals.userList = await userService.getUsers();
     next();
   },
 };
