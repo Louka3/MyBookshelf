@@ -20,7 +20,9 @@ router.delete(
 );
 
 // route for getting a list of books from the api
-
+router.get("/list", (_req: Request, res: Response) => {
+  res.status(200).json(res.locals.list);
+});
 // route for getting book data from the api
 
 // route for getting all books from the db

@@ -14,4 +14,9 @@ export const libraryController = {
     res.locals.success = libraryService.deleteLibrary(userId);
     next();
   },
+  // obtain the list of books inside of a library
+  async obtainLibrary(req: Request, res: Response, next: NextFunction) {
+    const userId: string = req.body._id;
+    res.locals.list = libraryService.getList(userId);
+  },
 };
