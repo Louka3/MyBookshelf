@@ -1,25 +1,45 @@
 import Users from "../models/userModel";
+import { dbService } from "./dbService";
 
 export const userService = {
-  async createUser(user: any) {
+  // async createUser(user: any) {
+  //   let userData: any;
+  //   const { username, password, email } = user as {
+  //     username: string;
+  //     password: string;
+  //     email: string;
+  //   };
+  //   await Users.create({
+  //     username: username,
+  //     password: password,
+  //     email: email,
+  //   }).then((data) => {
+  //     userData = {
+  //       username: data.username,
+  //       email: data.email,
+  //       id: data._id,
+  //     };
+  //   });
+  //   return userData;
+  // },
+
+  async createUser(user: {
+    username: string;
+    password: string;
+    email: string;
+  }) {
     let userData: any;
-    const { username, password, email } = user as {
-      username: string;
-      password: string;
-      email: string;
-    };
-    await Users.create({
-      username: username,
-      password: password,
-      email: email,
-    }).then((data) => {
-      userData = {
-        username: data.username,
-        email: data.email,
-        id: data._id,
+
+    try {
+      userData = await dbService.createEntry(Users, user);
+      return {
+        username: userData.username,
+        email: userData.email,
+        _id: userData._id,
       };
-    });
-    return userData;
+    } catch (err: any) {
+      throw new Error(`Error message: ${err.message}`);
+    }
   },
 
   async updateUser(info: any) {
