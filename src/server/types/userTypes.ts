@@ -8,4 +8,5 @@ export interface User {
 export interface UserProjection {
   _id: number;
   username: number;
+  email?: number;
 }
