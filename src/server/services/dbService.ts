@@ -13,11 +13,11 @@ export const dbService = {
   updateEntryById<T extends Document>(
     model: Model<T>,
     data: UpdateQuery<T>,
+    _id: string,
   ): Promise<T | null> {
     return model
-      .findByIdAndUpdate(data._id, data, {
-        new: true,
-        runValidators: true,
+      .findByIdAndUpdate(_id, data, {
+        returnDocument: "after",
       })
       .exec();
   },
@@ -27,8 +27,11 @@ export const dbService = {
   ): Promise<T | null> {
     return model.findById({ _id: _id });
   },
-  getListOfEntries<T extends Document>(model: Model<T>): Promise<T[]> {
-    return model.find({}).exec();
+  getListOfEntries<T extends Document>(
+    model: Model<T>,
+    projection: UserProjection,
+  ): Promise<T[]> {
+    return model.find({}, projection).exec();
   },
   deleteEntryById<T extends Document>(
     model: Model<T>,

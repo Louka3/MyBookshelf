@@ -2,27 +2,6 @@ import Users from "../models/userModel";
 import { dbService } from "./dbService";
 
 export const userService = {
-  // async createUser(user: any) {
-  //   let userData: any;
-  //   const { username, password, email } = user as {
-  //     username: string;
-  //     password: string;
-  //     email: string;
-  //   };
-  //   await Users.create({
-  //     username: username,
-  //     password: password,
-  //     email: email,
-  //   }).then((data) => {
-  //     userData = {
-  //       username: data.username,
-  //       email: data.email,
-  //       id: data._id,
-  //     };
-  //   });
-  //   return userData;
-  // },
-
   async createUser(user: {
     username: string;
     password: string;
@@ -43,14 +22,10 @@ export const userService = {
   },
 
   async updateUser(info: any) {
-    let userData: any;
-    const { _id } = info as { _id: string };
-
-    await Users.findByIdAndUpdate({ _id: _id }, info, {
-      returnDocument: "after",
-    }).then((data) => {
-      userData = data;
-    });
+    const _id = info._id;
+    delete info._id;
+    const userData = await dbService.updateEntryById(Users, info, _id);
+    console.log("userData:", userData);
     return userData;
   },
 
@@ -59,26 +34,26 @@ export const userService = {
     const { _id } = user as {
       _id: string;
     };
-    await Users.findOneAndDelete(
-      { _id: _id },
-      { projection: { _id: 0, username: 1 } },
-    ).then((data) => (userData = data));
+    userData = await dbService.deleteEntryById(Users, _id, {
+      _id: 0,
+      username: 1,
+    });
     return userData;
   },
 
   async getUserData(_id: string) {
     let userData: any;
-    await Users.findById({ _id: _id }, { password: 1 }).then((data) => {
-      userData = data;
-    });
+    userData = await dbService.getEntryById(Users, _id);
     return userData;
   },
 
   async getUsers() {
     let userList;
-    await Users.find({}, { _id: 1, username: 1, email: 1 }).then(
-      (data) => (userList = data),
-    );
+    userList = await dbService.getListOfEntries(Users, {
+      _id: 1,
+      username: 1,
+      email: 1,
+    });
     return userList;
   },
 };

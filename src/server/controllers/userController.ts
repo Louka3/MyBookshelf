@@ -45,7 +45,7 @@ export const userController = {
 
     const updatedData = await userService.updateUser(info);
     res.locals.updatedData = updatedData;
-    console.log(info);
+    // console.log(info);
     next();
   },
 
